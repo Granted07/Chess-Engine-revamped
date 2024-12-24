@@ -39,10 +39,13 @@ def main():
                 if len(main.player_clicks) == 2:
                     move = ChessEngine.Move(main.player_clicks[0], main.player_clicks[1], game.board)
                     print(move.get_chess_notation())
-                    if move in valid_moves:
-                        game.make_move(move)
-                        move_made = True
-                    main.sq_selected, main.player_clicks = (), []
+                    for i in range(len(valid_moves)):
+                        if move == valid_moves[i]:
+                            game.make_move(valid_moves[i])
+                            move_made = True
+                            main.sq_selected, main.player_clicks = (), []
+                    if not move_made:
+                        main.player_clicks = [main.sq_selected]
 
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_u:
