@@ -60,7 +60,7 @@ class GameState:
                 self.white_king_loc = (move.startRow, move.startCol)
             if move.pieceMoved == 'bK':
                 self.black_king_loc = (move.startRow, move.startCol)
-            if move.isEnpassant:
+            if move.isEnpassantMove:
                 self.board[move.endRow][move.endCol] = '-'
                 self.board[move.startRow][move.endCol] = move.pieceCaptured
                 self.enpassant_possible = (move.endRow, move.endCol)
@@ -261,13 +261,13 @@ class GameState:
                     moves.append(Move((row, col), (row - 1, col-1), self.board))
                 elif (row-1 , col-1) == self.enpassant_possible:
                     print("EnPassant move")
-                    moves.append(Move((row, col), (row - 1, col-1), self.board), isEnpassantMove=True)
+                    moves.append(Move((row, col), (row - 1, col-1), self.board, isEnpassantMove=True))
             if col<7:
                 if self.board[row-1][col+1][0] == 'b' and not (piece_pinned or pin_direction == (-1, +1)):
                     moves.append(Move((row, col), (row - 1, col+1), self.board))
-                elif (row-1 , col-1) == self.enpassant_possible:
+                elif (row-1 , col+1) == self.enpassant_possible:
                     print("EnPassant move")
-                    moves.append(Move((row, col), (row - 1, col+1), self.board), isEnpassantMove=True)
+                    moves.append(Move((row, col), (row - 1, col+1), self.board, isEnpassantMove=True))
 
         else:
             if self.board[row+1][col] == '-':
@@ -280,13 +280,13 @@ class GameState:
                     moves.append(Move((row, col), (row + 1, col-1), self.board))
                 elif (row+1 , col-1) == self.enpassant_possible:
                     print("EnPassant move")
-                    moves.append(Move((row, col), (row + 1, col-1), self.board), isEnpassantMove=True)
+                    moves.append(Move((row, col), (row + 1, col-1), self.board, isEnpassantMove=True))
             if col<7:
                 if self.board[row+1][col+1][0] == 'w' and not (piece_pinned or pin_direction == (1, 1 )):
                     moves.append(Move((row, col), (row + 1, col+1), self.board))
-                elif (row-1 , col-1) == self.enpassant_possible:
+                elif (row+1 , col+1) == self.enpassant_possible:
                     print("EnPassant move")
-                    moves.append(Move((row, col), (row + 1, col+1), self.board), isEnpassantMove=True)
+                    moves.append(Move((row, col), (row + 1, col+1), self.board, isEnpassantMove=True))
 
     def get_rook_moves(self, row, col, moves):
         piece_pinned = False
